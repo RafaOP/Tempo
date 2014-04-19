@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 8d5ddeec29f150b46af5a566f791c6b7
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - btnTexture: {fileID: 2800000, guid: e7e068c13f69f3a439c8c38957fe8aac, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
