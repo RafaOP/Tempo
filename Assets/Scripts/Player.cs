@@ -86,7 +86,6 @@ public class Player : MonoBehaviour
         setLife(getLife() - d);
         if (life - d <= 0)
         {
-            //transform.position = checkpoint;
             death();
             setLife(1);
         }
