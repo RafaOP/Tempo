@@ -4,7 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour
 {
     private float xspeed = 8.0F;                // X speed when walking
-    private float yspeed = 10.0F;               // Y speed when jumping
+    private float yspeed = 7.0F;               // Y speed when jumping  10.0
     private float xyspeed = 6.0F;               // X speed when jumping
     private const float gravity = 30.0F;        // -Y acceleration when jumping/falling
     private Vector3 direction = Vector3.zero;   // Actual direction
@@ -20,11 +20,15 @@ public class Player : MonoBehaviour
 
     private Vector3 rightDirection;             // The direction the player is looking
 
+	//
+	private int stones;							// The number of bullets the player can shoot
+
     void Start()
     {
         setLife(1);
         prevTime = Time.time;
         rightDirection = transform.localScale;
+		stones = 2;
     }
 
     // Controls the movement of the play using CharacterController.
@@ -72,12 +76,14 @@ public class Player : MonoBehaviour
 
     void shoot()
     {
-        if (Time.time >= prevTime + shootTime)
+		if (Time.time >= prevTime + shootTime && stones > 0)
         {
             prevTime = Time.time;
             Vector3 projPos = GameObject.Find("ProjectilPosition").transform.position;
             GameObject projectile = (GameObject)Instantiate(bullet, projPos, transform.rotation);
-            projectile.GetComponent<Projectile>().setRight(transform.localScale.z == 7 ? 1 : -1);
+			projectile.GetComponent<Projectile>().setRight (transform.localScale.z == 7 ? 1 : -1);
+			stones -= 1;
+			//Debug.Log ("Shot shot shot");
         }
     }
 
@@ -113,5 +119,21 @@ public class Player : MonoBehaviour
         {
             death();
         }
-    }
+	}
+
+	void OnTriggerEnter(Collider other) {
+		if (other.gameObject.tag == "Projectile") {
+			stones += 1;
+			Destroy(other.gameObject);
+			Debug.Log("Stone picked up");
+		}
+		if (other.gameObject.tag == "BPortalA")
+		{
+			transform.position = new Vector3 (GameObject.Find ("EPortalA").transform.position.x, transform.position.y, transform.position.z);
+		}
+		if (other.gameObject.tag == "BPortalB")
+		{
+			transform.position = new Vector3 (GameObject.Find ("EPortalB").transform.position.x, transform.position.y, transform.position.z);
+		}
+	}
 }

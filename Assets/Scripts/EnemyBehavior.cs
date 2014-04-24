@@ -42,36 +42,45 @@ public class EnemyBehavior : MonoBehaviour {
 	void Update () {
 
 		if(GameObject.Find ("Player").transform.position.x > initialPosition - triggerRadius - (distanceToWalk/2) &&
-		   GameObject.Find ("Player").transform.position.x < initialPosition + triggerRadius - (distanceToWalk/2) ) {
+		   GameObject.Find ("Player").transform.position.x < initialPosition + triggerRadius - (distanceToWalk/2) )
+		{
 			isFollowing = true;
 		}
 		if(GameObject.Find ("Player").transform.position.x < initialPosition - followRadius - (distanceToWalk/2) ||
-		   GameObject.Find ("Player").transform.position.x > initialPosition + followRadius - (distanceToWalk/2)) {
+		   GameObject.Find ("Player").transform.position.x > initialPosition + followRadius - (distanceToWalk/2))
+		{
 			isFollowing = false;
 		}
 
-		if(isFollowing){
-			if (transform.position.x < player.transform.position.x) {
+		if(isFollowing)
+		{
+			if (transform.position.x < player.transform.position.x)
+			{
 				transform.localScale = rightDirection;
 				transform.Translate (Vector3.right * Time.deltaTime * speedWalk);
 			}
-			else {
+			else
+			{
 				transform.localScale = leftDirection;
 				transform.Translate (Vector3.left * Time.deltaTime * speedWalk);
 			}
 		}
-		if(isFollowing == false) {
-			if (inLeftDirection && isBack) {
+		if(isFollowing == false)
+		{
+			if (inLeftDirection && isBack)
+			{
 				transform.Translate (Vector3.left * Time.deltaTime * speedWalk);
 				transform.localScale = leftDirection;
 			}
-			else {
+			else
+			{
 				transform.Translate (Vector3.right * Time.deltaTime * speedWalk);
 				transform.localScale = rightDirection;
 			}
 			if (transform.position.x > finalPosition.x)
 				inLeftDirection = true;
-			else {
+			else
+			{
 				inLeftDirection = false;
 				isBack = false;
 			}
@@ -82,14 +91,16 @@ public class EnemyBehavior : MonoBehaviour {
 	
 	void OnTriggerEnter (Collider hit)
 	{
-		if (hit.gameObject.tag == "Player") {
+		if (hit.gameObject.tag == "Player")
+		{
 			player.death ();
 		}
 	}
 
 	void OnCollisionEnter (Collision hit)
 	{
-		if (hit.transform.tag == "Projectil") {
+		if (hit.transform.tag == "Projectile")
+		{
 			life -= 1;
 			if (life <= 0)
 				Destroy (gameObject);
@@ -98,6 +109,8 @@ public class EnemyBehavior : MonoBehaviour {
 				transform.position = new Vector3 (transform.position.x + 1.0f, transform.position.y + 0.25f, 0.0f);
 			else
 				transform.position = new Vector3 (transform.position.x - 1.0f, transform.position.y + 0.25f, 0.0f);
+
+			Debug.Log ("MORRI!");
 		}
 
 	}
