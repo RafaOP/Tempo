@@ -3,7 +3,7 @@ using System.Collections;
 
 // How do I make it support many resolutions?
 
-public class Menu : MonoBehaviour
+public class IngameMenu : MonoBehaviour
 {
 	// Use this for initialization
 	void Start ()
