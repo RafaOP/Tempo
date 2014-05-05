@@ -4984,7 +4984,7 @@ Transform:
   m_GameObject: {fileID: 2046240560}
   m_LocalRotation: {x: -.148826018, y: .69126755, z: -.148826018, w: -.69126755}
   m_LocalPosition: {x: .720000148, y: .449999988, z: 0}
-  m_LocalScale: {x: .142857119, y: .142857134, z: .142857119}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 582719743}
 --- !u!114 &2046240566
@@ -4998,7 +4998,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5ddeec29f150b46af5a566f791c6b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnTexture: {fileID: 2800000, guid: e7e068c13f69f3a439c8c38957fe8aac, type: 3}
+  menuCamPos: {x: 0, y: 7.5, z: -40}
+  btnTexture: {fileID: 2800000, guid: 8fc6751293edac647b0e81aa39244f80, type: 3}
   style:
     m_Name: 
     m_Normal:

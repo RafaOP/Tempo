@@ -20,7 +20,8 @@ public class Player : MonoBehaviour
 
     private Vector3 rightDirection;             // The direction the player is looking
 
-	//
+    public static int actualLevel;
+
 	private int stones;							// The number of bullets the player can shoot
 
     void Start()
@@ -29,9 +30,9 @@ public class Player : MonoBehaviour
         prevTime = Time.time;
         rightDirection = transform.localScale;
 		stones = 2;
+        actualLevel = Application.loadedLevel;
     }
 
-    // Controls the movement of the play using CharacterController.
     void FixedUpdate()
     {
         move();
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
     public int getLife() { return life; }
     public void setLife(int l) { life = l; }
 
+    // Controls the movement of the play using CharacterController.
     void move()
     {
         CharacterController controller = GetComponent<CharacterController>();
@@ -76,14 +78,14 @@ public class Player : MonoBehaviour
 
     void shoot()
     {
-		if (Time.time >= prevTime + shootTime && stones > 0)
+		if (Time.time >= prevTime + shootTime && stones > 0 && !IngameGUI.mouseOverGUI)
         {
             prevTime = Time.time;
             Vector3 projPos = GameObject.Find("ProjectilPosition").transform.position;
             GameObject projectile = (GameObject)Instantiate(bullet, projPos, transform.rotation);
 			projectile.GetComponent<Projectile>().setRight (transform.localScale.z == 7 ? 1 : -1);
 			stones -= 1;
-			//Debug.Log ("Shot shot shot");
+			Debug.Log ("Shot shot shot");
         }
     }
 
@@ -113,27 +115,21 @@ public class Player : MonoBehaviour
         checkpoint.z = z;
     }
 
+    public void returnToCheckpoint() { transform.position = checkpoint; }
+
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.tag == "Enemy")
-        {
             death();
-        }
 	}
 
-	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.tag == "Projectile") {
+	void OnTriggerEnter(Collider other)
+    {
+		if (other.gameObject.tag == "Projectile")
+        {
 			stones += 1;
 			Destroy(other.gameObject);
 			Debug.Log("Stone picked up");
-		}
-		if (other.gameObject.tag == "BPortalA")
-		{
-			transform.position = new Vector3 (GameObject.Find ("EPortalA").transform.position.x, transform.position.y, transform.position.z);
-		}
-		if (other.gameObject.tag == "BPortalB")
-		{
-			transform.position = new Vector3 (GameObject.Find ("EPortalB").transform.position.x, transform.position.y, transform.position.z);
 		}
 	}
 }

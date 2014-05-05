@@ -5,6 +5,8 @@ using System.Collections;
 
 public class IngameMenu : MonoBehaviour
 {
+    public IngameGUI igui;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -18,5 +20,24 @@ public class IngameMenu : MonoBehaviour
     void OnMouseDown()
     {
         Debug.Log(name + " clicked =D");
+        if (name == "Continue")
+        {
+            Time.timeScale = 1;
+            Camera.main.transform.localRotation = IngameGUI.playCamRot;
+            Camera.main.transform.position = IngameGUI.playCamPos;
+        }
+
+        if (name == "Exit")
+        {
+            Debug.Log("Quitei");
+            Application.Quit();
+        }
+
+        if (name == "RetCheckpoint")
+        {
+            Player p = GameObject.Find("Player").GetComponent<Player>();
+            ((IngameGUI)Camera.main.GetComponent(typeof(IngameGUI))).unpause();
+            p.returnToCheckpoint();
+        }
     }
 }
